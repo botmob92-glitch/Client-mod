@@ -52,6 +52,11 @@ public final class Projector {
 
     /** Filled + outlined rectangle, with an optional label above it. */
     public static void drawBox(DrawContext ctx, MinecraftClient mc, int[] b, int rgb, String label) {
+        drawBox(ctx, mc, b, rgb, label, false);
+    }
+
+    /** Same, with an optional soft pulsing glow around the box. */
+    public static void drawBox(DrawContext ctx, MinecraftClient mc, int[] b, int rgb, String label, boolean glow) {
         int edge = 0xFF000000 | rgb;
         int fill = 0x33000000 | (rgb & 0xFFFFFF);
         int x1 = b[0], y1 = b[1], x2 = Math.max(b[2], b[0] + 3), y2 = Math.max(b[3], b[1] + 3);
@@ -60,6 +65,17 @@ public final class Projector {
         ctx.fill(x1, y2 - 1, x2, y2, edge);
         ctx.fill(x1, y1, x1 + 1, y2, edge);
         ctx.fill(x2 - 1, y1, x2, y2, edge);
+        if (glow) {
+            float pulse = 0.65f + 0.35f * (float) Math.sin(System.currentTimeMillis() / 250.0);
+            ctx.fill(x1, y1, x2, y2, ((int) (0x30 * pulse) << 24) | (rgb & 0xFFFFFF)); // brighter inside
+            for (int i = 1; i <= 5; i++) {
+                int c = ((int) (0x50 * pulse / i) << 24) | (rgb & 0xFFFFFF);
+                ctx.fill(x1 - i, y1 - i, x2 + i, y1 - i + 1, c);
+                ctx.fill(x1 - i, y2 + i - 1, x2 + i, y2 + i, c);
+                ctx.fill(x1 - i, y1 - i + 1, x1 - i + 1, y2 + i - 1, c);
+                ctx.fill(x2 + i - 1, y1 - i + 1, x2 + i, y2 + i - 1, c);
+            }
+        }
         if (label != null) ctx.drawTextWithShadow(mc.textRenderer, label, x1, y1 - 10, edge);
     }
 }
