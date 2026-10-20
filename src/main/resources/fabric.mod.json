@@ -2,7 +2,8 @@
   "schemaVersion": 1,
   "id": "clientmod",
   "version": "${version}",
-  "name": "ClientMod",
+  "name": "Customi Client",
+  "description": "Customi Client: a client-side Fabric utility mod with a clean menu.",
   "environment": "client",
   "entrypoints": { "client": ["com.example.clientmod.ClientMod"] },
   "depends": { "fabricloader": ">=0.16.0", "minecraft": "1.21.11", "java": ">=21", "fabric-api": "*" }
