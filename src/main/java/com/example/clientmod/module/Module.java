@@ -3,6 +3,7 @@ package com.example.clientmod.module;
 import com.example.clientmod.setting.Setting;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.option.KeyBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,8 @@ public abstract class Module {
     public final Category category;
     public final List<Setting<?>> settings = new ArrayList<>();
     private boolean enabled;
+    /** Toggle key (unbound by default). Set in Options > Controls. */
+    public KeyBinding key;
 
     protected Module(String name, String description, Category category) {
         this.name = name;
