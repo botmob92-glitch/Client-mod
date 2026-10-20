@@ -17,6 +17,7 @@ import java.util.List;
 public abstract class BlockScanModule extends Module {
     protected final Setting<Double> range = add(Setting.number("Range", 20.0, 8.0, 32.0, 4.0));
     protected final Setting<Boolean> labels = add(Setting.bool("Labels", true));
+    protected final Setting<Boolean> glow = add(Setting.bool("Glow", true));
 
     private record Found(BlockPos pos, int color, String label) {}
     private final List<Found> found = new ArrayList<>();
@@ -69,7 +70,7 @@ public abstract class BlockScanModule extends Module {
                 int dist = (int) pr.eye().distanceTo(Vec3d.ofCenter(f.pos()));
                 label = f.label() + " " + dist + "m";
             }
-            Projector.drawBox(ctx, mc, b, f.color(), label);
+            Projector.drawBox(ctx, mc, b, f.color(), label, glow.get());
         }
     }
 }
