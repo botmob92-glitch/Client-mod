@@ -16,6 +16,7 @@ public class EntityEspModule extends Module {
     private final Setting<Boolean> hostile = add(Setting.bool("Hostile mobs", true));
     private final Setting<Boolean> passive = add(Setting.bool("Passive mobs", false));
     private final Setting<Boolean> labels = add(Setting.bool("Names", true));
+    private final Setting<Boolean> glow = add(Setting.bool("Glow", true));
     private final Setting<Double> range = add(Setting.number("Range", 48.0, 16.0, 96.0, 8.0));
 
     public EntityEspModule() { super("Entity ESP", "Boxes around players and mobs.", Category.RENDER); }
@@ -33,7 +34,7 @@ public class EntityEspModule extends Module {
             else { if (!passive.get()) continue; rgb = 0x66BB6A; }
             int[] b = pr.project(e.getBoundingBox());
             if (b == null) continue;
-            Projector.drawBox(ctx, mc, b, rgb, labels.get() ? e.getName().getString() : null);
+            Projector.drawBox(ctx, mc, b, rgb, labels.get() ? e.getName().getString() : null, glow.get());
         }
     }
 }
