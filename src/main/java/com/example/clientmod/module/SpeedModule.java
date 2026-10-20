@@ -9,7 +9,7 @@ public class SpeedModule extends Module {
     private final Setting<Double> multiplier = add(Setting.number("Multiplier", 1.5, 1.0, 5.0, 0.25));
     private final Setting<Boolean> onlyGround = add(Setting.bool("Only on ground", false));
 
-    public SpeedModule() { super("Speed", "Move faster."); }
+        public SpeedModule() { super("Speed", "Move faster.", Category.MOVEMENT); }
 
     @Override
     public void onTick(MinecraftClient mc) {
